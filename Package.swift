@@ -4,20 +4,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "StocksAPI",
-    products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "StocksAPI",
+    name: "StocksAPI", // package name
+    platforms: [ // support platforms
+        .iOS(.v13),
+        .macOS(.v12),
+        .macCatalyst(.v13),
+    ],
+    products: [ // products that package produces, which can use by other packages
+        .library( // library product, contain module can be imported by other Swift code
+            name: "StocksAPI", // library name
             targets: ["StocksAPI"]),
+        .executable(name: "StocksAPIExec", // Program can be run by OS
+                    targets: ["StocksAPIExec"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "StocksAPI"),
+        .executableTarget(name: "StocksAPIExec", dependencies: ["StocksAPI"]), // StockAPIExec depends on StockAPI library
         .testTarget(
             name: "StocksAPITests",
             dependencies: ["StocksAPI"]),
-    ]
-)
+    ])
